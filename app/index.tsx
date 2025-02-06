@@ -2,7 +2,7 @@ import Tracker from "@/components/Tracker";
 import { useSheetContext } from "@/hooks/useSheetContext";
 import { useLocalStorage } from "@/hooks/useStoredData";
 import { useEffect } from "react";
-import { Button, ScrollView, View } from "react-native";
+import { Button, ScrollView } from "react-native";
 
 export default function Index() {
   const { getData, storeData } = useLocalStorage("character-sheet");
@@ -18,8 +18,8 @@ export default function Index() {
 
   return (
     <ScrollView className="flex-1">
-      {state.trackers.map((tracker) => (
-        <Tracker data={tracker} key={tracker.id} />
+      {state.trackers.map((tracker, index) => (
+        <Tracker data={tracker} index={index} key={tracker.id} />
       ))}
       <Button
         title="Add tracker!"

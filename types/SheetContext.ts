@@ -6,4 +6,9 @@ export type SheetState = {
 
 export type SheetAction =
   | { type: "Set State"; payload: SheetState }
-  | { type: "Add Tracker" };
+  | { type: "Add Tracker" }
+  | { type: "Delete Tracker"; payload: number }
+  | {
+      type: "Update Tracker";
+      payload: { index: number; value: Partial<TrackerData> };
+    };

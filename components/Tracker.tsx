@@ -1,34 +1,48 @@
+import { useSheetContext } from "@/hooks/useSheetContext";
 import { TrackerData } from "@/types/TrackerData";
-import { useState } from "react";
-import { View, Text, TextInput } from "react-native";
+import { Button, Text, TextInput, View } from "react-native";
 
 export type TrackerProps = {
   data: TrackerData;
+  index: number;
 };
 
-const Tracker = ({ data }: TrackerProps) => {
-  const [current, setCurrent] = useState<string>(data.current.toString());
-  const [maximum, setMaximum] = useState<string | undefined>(
-    data.maximum?.toString()
-  );
-  const [label, setLabel] = useState<string>(data.label);
-
+const Tracker = ({ data, index }: TrackerProps) => {
+  const { dispatch } = useSheetContext();
   return (
     <View>
-      <Text>{label}</Text>
+      <View className="flex-row justify-between">
+        <Text>{data.label}</Text>
+        <Button
+          title="X"
+          onPress={() => dispatch({ type: "Delete Tracker", payload: index })}
+        />
+      </View>
       <View className="flex-row">
         <TextInput
           className="flex-1"
-          value={current.toString()}
-          onChangeText={setCurrent}
+          value={data.current.toString()}
+          keyboardType="number-pad"
+          onChangeText={(text) =>
+            dispatch({
+              type: "Update Tracker",
+              payload: { index, value: { current: parseInt(text) } },
+            })
+          }
         />
-        {maximum && (
+        {data.maximum && (
           <>
             <Text>/</Text>
             <TextInput
               className="flex-1"
-              value={maximum.toString()}
-              onChangeText={setMaximum}
+              value={data.maximum.toString()}
+              keyboardType="number-pad"
+              onChangeText={(text) =>
+                dispatch({
+                  type: "Update Tracker",
+                  payload: { index, value: { maximum: parseInt(text) } },
+                })
+              }
             />
           </>
         )}

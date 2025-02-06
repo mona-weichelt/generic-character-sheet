@@ -29,6 +29,19 @@ const sheetReducer = (state: SheetState, action: SheetAction) => {
           },
         ],
       };
+    case "Update Tracker":
+      const i = action.payload.index;
+      const tracker = state.trackers[i];
+      state.trackers[i] = {
+        ...tracker,
+        ...action.payload.value,
+      };
+      return { ...state };
+    case "Delete Tracker":
+      return {
+        ...state,
+        trackers: state.trackers.toSpliced(action.payload, 1),
+      };
     default:
       return state;
   }
