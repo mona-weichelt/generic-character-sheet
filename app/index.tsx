@@ -1,15 +1,18 @@
-import { Text, View } from "react-native";
+import Tracker, { TrackerData } from "@/components/Tracker";
+import { View } from "react-native";
+
+const sampleData: TrackerData[] = [
+  { current: 3, label: "victories" },
+  { current: 1, maximum: 20, label: "recoveries" },
+  { current: 0, maximum: 2, label: "heroic ability" },
+];
 
 export default function Index() {
   return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <Text>Edit app/index.tsx to edit this screen.</Text>
+    <View className="flex-1">
+      {sampleData.map((data) => (
+        <Tracker data={data} />
+      ))}
     </View>
   );
 }
