@@ -5,12 +5,14 @@ import { Button, Text, TextInput, View } from "react-native";
 export type TrackerProps = {
   data: TrackerData;
   index: number;
+  [x: string]: any;
 };
 
-const Tracker = ({ data, index }: TrackerProps) => {
+const Tracker = (props: TrackerProps) => {
+  const { data, index } = props;
   const { dispatch } = useSheetContext();
   return (
-    <View>
+    <View {...props}>
       <View className="flex-row justify-between">
         <Text>{data.label}</Text>
         <Button

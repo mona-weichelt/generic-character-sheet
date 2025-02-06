@@ -1,8 +1,9 @@
+import { Spawner } from "@/components/Spawner";
 import Tracker from "@/components/Tracker";
 import { useSheetContext } from "@/hooks/useSheetContext";
 import { useLocalStorage } from "@/hooks/useStoredData";
 import { useEffect } from "react";
-import { Button, ScrollView } from "react-native";
+import { Button, ScrollView, View, Text } from "react-native";
 
 export default function Index() {
   const { getData, storeData } = useLocalStorage("character-sheet");
@@ -17,14 +18,23 @@ export default function Index() {
   }, [state]);
 
   return (
-    <ScrollView className="flex-1">
+    <ScrollView
+      className="flex-1"
+      stickyHeaderIndices={[0]}
+      contentContainerClassName="gap-8"
+    >
+      <View className="bg-green-400 p-8">
+        <Text>Header</Text>
+      </View>
       {state.trackers.map((tracker, index) => (
-        <Tracker data={tracker} index={index} key={tracker.id} />
+        <Tracker
+          className="mx-8 pb-2 border-b"
+          data={tracker}
+          index={index}
+          key={tracker.id}
+        />
       ))}
-      <Button
-        title="Add tracker!"
-        onPress={() => dispatch({ type: "Add Tracker" })}
-      />
+      <Spawner onPress={() => dispatch({ type: "Add Tracker" })} />
     </ScrollView>
   );
 }
